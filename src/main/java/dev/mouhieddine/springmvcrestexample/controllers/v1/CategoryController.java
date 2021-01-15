@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since : 1/15/2021, Friday
  **/
 @Controller
-@RequestMapping("/api/v1/categories/")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
   private final CategoryService categoryService;
@@ -24,13 +24,13 @@ public class CategoryController {
     this.categoryService = categoryService;
   }
 
-  @GetMapping
+  @GetMapping({"", "/"})
   public ResponseEntity<CategoryListDTO> getAllCategories() {
     return new ResponseEntity<CategoryListDTO>(
             new CategoryListDTO(categoryService.getAllCategories()), HttpStatus.OK);
   }
 
-  @GetMapping("{name}")
+  @GetMapping({"/{name}", "{name}"})
   public ResponseEntity<CategoryDTO> getCategoryByName(@PathVariable String name) {
     return new ResponseEntity<CategoryDTO>(categoryService.getCategoryByName(name), HttpStatus.OK);
   }
