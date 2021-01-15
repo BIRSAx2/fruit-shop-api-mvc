@@ -4,6 +4,7 @@ import dev.mouhieddine.springmvcrestexample.domain.Category;
 import dev.mouhieddine.springmvcrestexample.repositories.CategoryRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 /**
  * @author : Mouhieddine.dev
@@ -11,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
  **/
 
 @Slf4j
+@Component
 public class Bootstrap implements CommandLineRunner {
 
   private final CategoryRepository categoryRepository;
