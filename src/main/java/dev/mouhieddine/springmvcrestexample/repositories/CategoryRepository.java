@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @since : 1/15/2021, Friday
  **/
 public interface CategoryRepository extends JpaRepository<Category, Long> {
+  Category findByName(String categoryName);
 }
