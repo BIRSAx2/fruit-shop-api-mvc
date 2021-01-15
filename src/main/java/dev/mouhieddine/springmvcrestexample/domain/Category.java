@@ -1,6 +1,6 @@
 package dev.mouhieddine.springmvcrestexample.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
