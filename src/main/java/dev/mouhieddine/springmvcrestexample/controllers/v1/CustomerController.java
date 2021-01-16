@@ -30,18 +30,17 @@ public class CustomerController {
   }
 
   @GetMapping({"/{id}", "/{id}/"})
-  public ResponseEntity<CustomerDTO> getCustomerByName(@PathVariable Long id) {
+  public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Long id) {
     return new ResponseEntity<>(customerService.getCustomerById(id), HttpStatus.OK);
   }
 
   @PutMapping({"/{id}", "/{id}/"})
-  public ResponseEntity<CustomerDTO> updateCustomerByDTO(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
-    return new ResponseEntity<>(customerService.saveCustomerByDTO(id, customerDTO), HttpStatus.CREATED);
+  public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
+    return new ResponseEntity<>(customerService.saveCustomerByDTO(id, customerDTO), HttpStatus.OK);
   }
 
   @PostMapping({"", "/"})
-  public ResponseEntity<CustomerDTO> createNewCustomer(@RequestBody CustomerDTO customerDTO) {
-    return new ResponseEntity<CustomerDTO>(customerService.createNewCustomer(customerDTO),
-            HttpStatus.CREATED);
+  public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
+    return new ResponseEntity<CustomerDTO>(customerService.createNewCustomer(customerDTO), HttpStatus.CREATED);
   }
 }

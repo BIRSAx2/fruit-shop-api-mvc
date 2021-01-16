@@ -125,7 +125,7 @@ class CustomerControllerTest {
     mockMvc.perform(put("/api/v1/customers/1")
             .contentType(MediaType.APPLICATION_JSON)
             .content(asJsonString(joe)))
-            .andExpect(status().isCreated())
+            .andExpect(status().isOk())
             .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)))
             .andExpect(jsonPath("$.lastname", equalTo(LASTNAME)))
             .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customers/1")));
