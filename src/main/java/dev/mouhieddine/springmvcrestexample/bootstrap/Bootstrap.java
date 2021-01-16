@@ -42,15 +42,15 @@ public class Bootstrap implements CommandLineRunner {
 
     Customer faiz = new Customer();
     faiz.setFirstname("Faiz");
-    faiz.setFirstname("Wasim");
+    faiz.setLastname("Wasim");
 
     Customer freddy = new Customer();
     freddy.setFirstname("Freddy");
-    freddy.setFirstname("Meyers");
+    freddy.setLastname("Meyers");
 
     Customer ramazan = new Customer();
     ramazan.setFirstname("Ramazan");
-    ramazan.setFirstname("Demir");
+    ramazan.setLastname("Demir");
 
     customerRepository.saveAll(Arrays.asList(joe, faiz, freddy, ramazan));
   }

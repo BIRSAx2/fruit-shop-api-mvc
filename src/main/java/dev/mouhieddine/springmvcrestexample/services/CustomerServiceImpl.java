@@ -30,7 +30,7 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.findAll().stream()
             .map(customer -> {
               CustomerDTO customerDTO = mapper.customerToCustomerDTO(customer);
-              customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId());
+              customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
               return customerDTO;
             })
             .collect(Collectors.toList());
@@ -39,7 +39,11 @@ public class CustomerServiceImpl implements CustomerService {
   @Override
   public CustomerDTO getCustomerById(Long id) {
     return customerRepository.findById(id)
-            .map(mapper::customerToCustomerDTO)
+            .map(customer -> {
+              CustomerDTO customerDTO = mapper.customerToCustomerDTO(customer);
+              customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
+              return customerDTO;
+            })
             .orElseThrow(RuntimeException::new);
   }
 }
