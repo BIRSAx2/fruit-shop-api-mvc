@@ -31,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.findAll().stream()
             .map(customer -> {
               CustomerDTO customerDTO = mapper.customerToCustomerDTO(customer);
-              customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId());
+              customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
               return customerDTO;
             })
             .collect(Collectors.toList());
@@ -42,7 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.findById(id)
             .map(customer -> {
               CustomerDTO customerDTO = mapper.customerToCustomerDTO(customer);
-              customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId());
+              customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
               return customerDTO;
             })
             .orElseThrow(RuntimeException::new);
@@ -50,11 +50,20 @@ public class CustomerServiceImpl implements CustomerService {
 
   @Override
   public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+    return saveAndReturnDTO(mapper.customerDTOToCustomer(customerDTO));
+  }
 
+  @Override
+  public CustomerDTO saveCustomerByDTO(Long id, CustomerDTO customerDTO) {
     Customer customer = mapper.customerDTOToCustomer(customerDTO);
+    customer.setId(id);
+    return saveAndReturnDTO(customer);
+  }
+
+  private CustomerDTO saveAndReturnDTO(Customer customer) {
     Customer savedCustomer = customerRepository.save(customer);
     CustomerDTO returnDTO = mapper.customerToCustomerDTO(savedCustomer);
-    returnDTO.setCustomerUrl("/api/v1/customer/"+savedCustomer.getId());
+    returnDTO.setCustomerUrl("/api/v1/customers/" + savedCustomer.getId());
     return returnDTO;
   }
 }
