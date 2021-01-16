@@ -2,6 +2,7 @@ package dev.mouhieddine.springmvcrestexample.services;
 
 import dev.mouhieddine.springmvcrestexample.api.v1.mapper.CustomerMapper;
 import dev.mouhieddine.springmvcrestexample.api.v1.model.CustomerDTO;
+import dev.mouhieddine.springmvcrestexample.domain.Customer;
 import dev.mouhieddine.springmvcrestexample.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.findAll().stream()
             .map(customer -> {
               CustomerDTO customerDTO = mapper.customerToCustomerDTO(customer);
-              customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
+              customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId());
               return customerDTO;
             })
             .collect(Collectors.toList());
@@ -41,9 +42,19 @@ public class CustomerServiceImpl implements CustomerService {
     return customerRepository.findById(id)
             .map(customer -> {
               CustomerDTO customerDTO = mapper.customerToCustomerDTO(customer);
-              customerDTO.setCustomerUrl("/api/v1/customers/" + customer.getId());
+              customerDTO.setCustomerUrl("/api/v1/customer/" + customer.getId());
               return customerDTO;
             })
             .orElseThrow(RuntimeException::new);
+  }
+
+  @Override
+  public CustomerDTO createNewCustomer(CustomerDTO customerDTO) {
+
+    Customer customer = mapper.customerDTOToCustomer(customerDTO);
+    Customer savedCustomer = customerRepository.save(customer);
+    CustomerDTO returnDTO = mapper.customerToCustomerDTO(savedCustomer);
+    returnDTO.setCustomerUrl("/api/v1/customer/"+savedCustomer.getId());
+    return returnDTO;
   }
 }

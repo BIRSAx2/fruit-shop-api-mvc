@@ -19,7 +19,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author : Mouhieddine.dev
@@ -54,8 +55,8 @@ class CategoryControllerTest {
     when(categoryService.getAllCategories()).thenReturn(Arrays.asList(cat1, cat2));
 
     // then
-    mockMvc.perform(get("/api/v1/categories/"))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(get("/api/v1/categories/")
+            .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.categories", hasSize(2)));
   }
@@ -69,8 +70,8 @@ class CategoryControllerTest {
     when(categoryService.getCategoryByName(anyString())).thenReturn(cat1);
 
     // then
-    mockMvc.perform(get("/api/v1/categories/" + FRUITS))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(get("/api/v1/categories/" + FRUITS)
+            .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.name", equalTo(FRUITS)));
   }

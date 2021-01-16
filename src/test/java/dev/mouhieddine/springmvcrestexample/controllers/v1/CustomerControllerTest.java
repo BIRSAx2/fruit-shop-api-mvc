@@ -1,6 +1,5 @@
 package dev.mouhieddine.springmvcrestexample.controllers.v1;
 
-import com.sun.xml.bind.v2.model.core.ID;
 import dev.mouhieddine.springmvcrestexample.api.v1.model.CustomerDTO;
 import dev.mouhieddine.springmvcrestexample.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,13 +14,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 
+import static dev.mouhieddine.springmvcrestexample.controllers.v1.AbstractRestControllerTest.asJsonString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * @author : Mouhieddine.dev
@@ -56,8 +57,8 @@ class CustomerControllerTest {
     when(customerService.getAllCustomers()).thenReturn(Arrays.asList(joe, faiz));
 
     // then
-    mockMvc.perform(get("/api/v1/customers"))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(get("/api/v1/customers/")
+            .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.customers", hasSize(2)));
 
@@ -74,10 +75,34 @@ class CustomerControllerTest {
     when(customerService.getCustomerById(anyLong())).thenReturn(joe);
 
     // then
-    mockMvc.perform(get("/api/v1/customers/1"))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(get("/api/v1/customers/1")
+            .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)));
 
+  }
+
+  @Test
+  void createNewCustomer() throws Exception {
+
+    //given
+    CustomerDTO joe = new CustomerDTO();
+    joe.setFirstname(FIRSTNAME);
+    joe.setLastname("Newman");
+
+    CustomerDTO returnJoe = new CustomerDTO();
+    returnJoe.setFirstname(joe.getFirstname());
+    returnJoe.setLastname(joe.getLastname());
+    returnJoe.setCustomerUrl("/api/v1/customers/1");
+
+    when(customerService.createNewCustomer(joe)).thenReturn(returnJoe);
+
+    //when/then
+    mockMvc.perform(post("/api/v1/customers/")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(asJsonString(joe)))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)))
+            .andExpect(jsonPath("$.customer_url", equalTo("/api/v1/customers/1")));
   }
 }
