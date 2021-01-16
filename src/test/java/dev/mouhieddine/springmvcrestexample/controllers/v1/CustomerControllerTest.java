@@ -1,5 +1,6 @@
 package dev.mouhieddine.springmvcrestexample.controllers.v1;
 
+import com.sun.xml.bind.v2.model.core.ID;
 import dev.mouhieddine.springmvcrestexample.api.v1.model.CustomerDTO;
 import dev.mouhieddine.springmvcrestexample.services.CustomerService;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -62,16 +64,17 @@ class CustomerControllerTest {
   }
 
   @Test
-  void getCustomerByName() throws Exception {
+  void getCustomerById() throws Exception {
     // given
     CustomerDTO joe = new CustomerDTO();
     joe.setFirstname(FIRSTNAME);
     joe.setLastname("Newman");
+    joe.setCustomerUrl("/api/v1/customers/1");
 
-    when(customerService.getCustomerByName(anyString())).thenReturn(joe);
+    when(customerService.getCustomerById(anyLong())).thenReturn(joe);
 
     // then
-    mockMvc.perform(get("/api/v1/customers/" + FIRSTNAME))
+    mockMvc.perform(get("/api/v1/customers/1"))
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.firstname", equalTo(FIRSTNAME)));

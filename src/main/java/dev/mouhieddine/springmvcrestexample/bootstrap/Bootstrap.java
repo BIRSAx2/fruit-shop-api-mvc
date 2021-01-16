@@ -29,24 +29,13 @@ public class Bootstrap implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
-    Category fruits = new Category();
-    fruits.setName("Fruits");
+    loadCategories();
+    loadCustomers();
 
-    Category dried = new Category();
-    dried.setName("Dried");
+    log.debug("Loading boostrap data");
+  }
 
-    Category fresh = new Category();
-    fresh.setName("Fresh");
-
-    Category exotic = new Category();
-    exotic.setName("Exotic");
-
-    Category nuts = new Category();
-    nuts.setName("Nuts");
-
-    categoryRepository.saveAll(Arrays.asList(fruits, dried, fresh, exotic, nuts));
-
-
+  private void loadCustomers() {
     Customer joe = new Customer();
     joe.setFirstname("Joe");
     joe.setLastname("Newman");
@@ -64,7 +53,24 @@ public class Bootstrap implements CommandLineRunner {
     ramazan.setFirstname("Demir");
 
     customerRepository.saveAll(Arrays.asList(joe, faiz, freddy, ramazan));
+  }
 
-    log.debug("Loading boostrap data. Data Loaded = " + categoryRepository.count());
+  private void loadCategories() {
+    Category fruits = new Category();
+    fruits.setName("Fruits");
+
+    Category dried = new Category();
+    dried.setName("Dried");
+
+    Category fresh = new Category();
+    fresh.setName("Fresh");
+
+    Category exotic = new Category();
+    exotic.setName("Exotic");
+
+    Category nuts = new Category();
+    nuts.setName("Nuts");
+
+    categoryRepository.saveAll(Arrays.asList(fruits, dried, fresh, exotic, nuts));
   }
 }

@@ -12,9 +12,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -62,10 +64,10 @@ class CustomerServiceTest {
     joe.setId(ID);
     joe.setFirstname(FIRSTNAME);
     joe.setLastname(LASTNAME);
-    when(customerRepository.findByName(anyString())).thenReturn(joe);
+    when(customerRepository.findById(anyLong())).thenReturn(Optional.of(joe));
 
     // when
-    CustomerDTO customerDTO = service.getCustomerByName(FIRSTNAME);
+    CustomerDTO customerDTO = service.getCustomerById(ID);
 
     // then
     assertNotNull(customerDTO);
