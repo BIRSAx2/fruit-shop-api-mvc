@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -35,11 +35,11 @@ class CustomerServiceTest {
   @Mock
   CustomerRepository customerRepository;
 
-  CustomerService service;
+  CustomerService customerService;
 
   @BeforeEach
   void setUp() {
-    service = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
+    customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
   }
 
   @Test
@@ -49,7 +49,7 @@ class CustomerServiceTest {
     when(customerRepository.findAll()).thenReturn(customers);
 
     // when
-    List<CustomerDTO> customerDTOS = service.getAllCustomers();
+    List<CustomerDTO> customerDTOS = customerService.getAllCustomers();
 
     // then
     assertNotNull(customerDTOS);
@@ -67,7 +67,7 @@ class CustomerServiceTest {
     when(customerRepository.findById(anyLong())).thenReturn(Optional.of(joe));
 
     // when
-    CustomerDTO customerDTO = service.getCustomerById(ID);
+    CustomerDTO customerDTO = customerService.getCustomerById(ID);
 
     // then
     assertNotNull(customerDTO);
@@ -92,7 +92,7 @@ class CustomerServiceTest {
     when(customerRepository.save(any(Customer.class))).thenReturn(savedJoe);
 
     // when
-    CustomerDTO savedDTO = service.createNewCustomer(joe);
+    CustomerDTO savedDTO = customerService.createNewCustomer(joe);
 
     // then
     assertNotNull(savedDTO);
@@ -118,7 +118,7 @@ class CustomerServiceTest {
     when(customerRepository.save(any(Customer.class))).thenReturn(savedJoe);
 
     // when
-    CustomerDTO savedDTO = service.saveCustomerByDTO(ID,joe);
+    CustomerDTO savedDTO = customerService.saveCustomerByDTO(ID,joe);
 
     // then
     assertNotNull(savedDTO);
@@ -126,5 +126,13 @@ class CustomerServiceTest {
     assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
 
 
+  }
+
+  @Test
+  void deleteCustomerById() {
+    final Long id = 1L;
+    customerService.deleteCustomerById(id);
+
+    verify(customerRepository, times(1)).deleteById(id);
   }
 }
