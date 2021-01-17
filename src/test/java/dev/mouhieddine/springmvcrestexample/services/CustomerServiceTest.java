@@ -2,6 +2,7 @@ package dev.mouhieddine.springmvcrestexample.services;
 
 import dev.mouhieddine.springmvcrestexample.api.v1.mapper.CustomerMapper;
 import dev.mouhieddine.springmvcrestexample.api.v1.model.CustomerDTO;
+import dev.mouhieddine.springmvcrestexample.controllers.v1.CustomerController;
 import dev.mouhieddine.springmvcrestexample.domain.Customer;
 import dev.mouhieddine.springmvcrestexample.repositories.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -82,7 +83,7 @@ class CustomerServiceTest {
     CustomerDTO joe = new CustomerDTO();
     joe.setFirstname(FIRSTNAME);
     joe.setLastname("Newman");
-    joe.setCustomerUrl("/api/v1/customers/1");
+    joe.setCustomerUrl(CustomerController.BASE_URL+"/1");
 
     Customer savedJoe = new Customer();
     savedJoe.setId(1L);
@@ -97,7 +98,7 @@ class CustomerServiceTest {
     // then
     assertNotNull(savedDTO);
     assertEquals(FIRSTNAME, savedDTO.getFirstname());
-    assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
+    assertEquals(CustomerController.BASE_URL+"/1", savedDTO.getCustomerUrl());
 
   }
 
@@ -108,7 +109,7 @@ class CustomerServiceTest {
     CustomerDTO joe = new CustomerDTO();
     joe.setFirstname(FIRSTNAME);
     joe.setLastname("Newman");
-    joe.setCustomerUrl("/api/v1/customers/1");
+    joe.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
     Customer savedJoe = new Customer();
     savedJoe.setId(ID);
@@ -118,12 +119,12 @@ class CustomerServiceTest {
     when(customerRepository.save(any(Customer.class))).thenReturn(savedJoe);
 
     // when
-    CustomerDTO savedDTO = customerService.saveCustomerByDTO(ID,joe);
+    CustomerDTO savedDTO = customerService.saveCustomerByDTO(ID, joe);
 
     // then
     assertNotNull(savedDTO);
     assertEquals(FIRSTNAME, savedDTO.getFirstname());
-    assertEquals("/api/v1/customers/1", savedDTO.getCustomerUrl());
+    assertEquals(CustomerController.BASE_URL + "/1", savedDTO.getCustomerUrl());
 
 
   }
