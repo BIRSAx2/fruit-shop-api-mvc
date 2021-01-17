@@ -4,6 +4,7 @@ import dev.mouhieddine.springmvcrestexample.api.v1.mapper.CustomerMapper;
 import dev.mouhieddine.springmvcrestexample.api.v1.model.CustomerDTO;
 import dev.mouhieddine.springmvcrestexample.controllers.v1.CustomerController;
 import dev.mouhieddine.springmvcrestexample.domain.Customer;
+import dev.mouhieddine.springmvcrestexample.exceptions.ResourceNotFoundException;
 import dev.mouhieddine.springmvcrestexample.repositories.CustomerRepository;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
               customerDTO.setCustomerUrl(getCustomerUrl(customer.getId()));
               return customerDTO;
             })
-            .orElseThrow(RuntimeException::new);
+            .orElseThrow(ResourceNotFoundException::new);
   }
 
   @Override
@@ -76,7 +77,7 @@ public class CustomerServiceImpl implements CustomerService {
       CustomerDTO returnDTO = mapper.customerToCustomerDTO(customerRepository.save(customer));
       returnDTO.setCustomerUrl(getCustomerUrl(id));
       return returnDTO;
-    }).orElseThrow(RuntimeException::new);
+    }).orElseThrow(ResourceNotFoundException::new);
   }
 
   @Override
