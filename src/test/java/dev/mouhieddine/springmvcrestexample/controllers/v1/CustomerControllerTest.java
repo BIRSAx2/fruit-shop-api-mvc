@@ -146,7 +146,8 @@ class CustomerControllerTest {
     patchedJoe.setLastname(LASTNAME);
     patchedJoe.setCustomerUrl(CustomerController.BASE_URL + "/1");
 
-    when(customerService.patchCustomer(anyLong(), any(CustomerDTO.class))).thenReturn(patchedJoe);
+    when(customerService.patchCustomer(anyLong(), any(CustomerDTO.class)))
+            .thenReturn(patchedJoe);
 
     //when/then
     mockMvc.perform(patch(CustomerController.BASE_URL + "/1")

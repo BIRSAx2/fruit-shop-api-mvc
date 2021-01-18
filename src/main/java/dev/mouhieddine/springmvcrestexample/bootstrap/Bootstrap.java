@@ -2,8 +2,10 @@ package dev.mouhieddine.springmvcrestexample.bootstrap;
 
 import dev.mouhieddine.springmvcrestexample.domain.Category;
 import dev.mouhieddine.springmvcrestexample.domain.Customer;
+import dev.mouhieddine.springmvcrestexample.domain.Vendor;
 import dev.mouhieddine.springmvcrestexample.repositories.CategoryRepository;
 import dev.mouhieddine.springmvcrestexample.repositories.CustomerRepository;
+import dev.mouhieddine.springmvcrestexample.repositories.VendorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -21,16 +23,19 @@ public class Bootstrap implements CommandLineRunner {
 
   private final CategoryRepository categoryRepository;
   private final CustomerRepository customerRepository;
+  private final VendorRepository vendorRepository;
 
-  public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository) {
+  public Bootstrap(CategoryRepository categoryRepository, CustomerRepository customerRepository, VendorRepository vendorRepository) {
     this.categoryRepository = categoryRepository;
     this.customerRepository = customerRepository;
+    this.vendorRepository = vendorRepository;
   }
 
   @Override
   public void run(String... args) throws Exception {
     loadCategories();
     loadCustomers();
+    loadVendors();
 
     log.debug("Loading boostrap data");
   }
@@ -72,5 +77,18 @@ public class Bootstrap implements CommandLineRunner {
     nuts.setName("Nuts");
 
     categoryRepository.saveAll(Arrays.asList(fruits, dried, fresh, exotic, nuts));
+  }
+
+  private void loadVendors() {
+    Vendor shelby = new Vendor();
+    shelby.setName("Shelby Company Limited");
+
+    Vendor western = new Vendor();
+    western.setName("Western Tasty Fruits Ltd.");
+
+    Vendor exotic = new Vendor();
+    exotic.setName("Exotic Fruits Company");
+
+    vendorRepository.saveAll(Arrays.asList(shelby, western, exotic));
   }
 }

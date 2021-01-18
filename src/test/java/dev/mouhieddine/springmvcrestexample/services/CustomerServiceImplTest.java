@@ -28,7 +28,7 @@ import static org.mockito.Mockito.*;
  **/
 
 @ExtendWith(MockitoExtension.class)
-class CustomerServiceTest {
+class CustomerServiceImplTest {
 
   public static final long ID = 1L;
   public static final String FIRSTNAME = "Joe";
@@ -59,7 +59,7 @@ class CustomerServiceTest {
   }
 
   @Test
-  void getCustomerByName() {
+  void getCustomerById() {
     // given
     Customer joe = new Customer();
     joe.setId(ID);

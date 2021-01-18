@@ -6,6 +6,7 @@ import dev.mouhieddine.springmvcrestexample.bootstrap.Bootstrap;
 import dev.mouhieddine.springmvcrestexample.domain.Customer;
 import dev.mouhieddine.springmvcrestexample.repositories.CategoryRepository;
 import dev.mouhieddine.springmvcrestexample.repositories.CustomerRepository;
+import dev.mouhieddine.springmvcrestexample.repositories.VendorRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,6 +31,8 @@ class CustomerServiceImplIT {
   CustomerRepository customerRepository;
   @Autowired
   CategoryRepository categoryRepository;
+  @Autowired
+  VendorRepository vendorRepository;
 
   CustomerService customerService;
 
@@ -38,7 +41,7 @@ class CustomerServiceImplIT {
     log.debug("Loading customer data for integration test");
 
     // setup data for testing
-    Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository);
+    Bootstrap bootstrap = new Bootstrap(categoryRepository, customerRepository, vendorRepository);
     bootstrap.run();
 
     customerService = new CustomerServiceImpl(customerRepository, CustomerMapper.INSTANCE);
@@ -92,13 +95,13 @@ class CustomerServiceImplIT {
 
     // when
     customerService.patchCustomer(id, customerDTO);
-    Customer updatedCustomer = customerRepository.getOne(id);
+    Customer patchedCustomer = customerRepository.getOne(id);
 
     // then
-    assertNotNull(updatedCustomer);
-    assertEquals(newLastname, updatedCustomer.getLastname());
-    assertEquals(originalFirstname, updatedCustomer.getFirstname());
-    assertNotEquals(originalLastname, updatedCustomer.getLastname());
+    assertNotNull(patchedCustomer);
+    assertEquals(newLastname, patchedCustomer.getLastname());
+    assertEquals(originalFirstname, patchedCustomer.getFirstname());
+    assertNotEquals(originalLastname, patchedCustomer.getLastname());
   }
 
   private Long getCustomerIdValue() {
