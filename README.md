@@ -1,4 +1,4 @@
-# spring-mvc-rest-example [![Mouhieddine.dev](https://circleci.com/gh/BIRSAx2/spring-mvc-rest-example.svg?style=svg)](https://app.circleci.com/pipelines/github/BIRSAx2/spring-mvc-rest-example) [![codecov](https://codecov.io/gh/BIRSAx2/spring-mvc-rest-example/branch/master/graph/badge.svg?token=IM72YOAF9D)](https://codecov.io/gh/BIRSAx2/spring-mvc-rest-example)
+# Fruit Shop API [![Mouhieddine.dev](https://circleci.com/gh/BIRSAx2/spring-mvc-fruit-shop-api.svg?style=svg)](https://app.circleci.com/pipelines/github/BIRSAx2/spring-mvc-fruit-shop-api) [![codecov](https://codecov.io/gh/BIRSAx2/spring-mvc-rest-example/branch/master/graph/badge.svg?token=IM72YOAF9D)](https://codecov.io/gh/BIRSAx2/spring-mvc-rest-example)
 Simple API built with Spring Boot MVC to mimic [Fruit Shop API](https://api.predic8.de/shop/docs#/)
 
 ###Run locally
