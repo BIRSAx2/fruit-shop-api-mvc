@@ -1,6 +1,8 @@
 package dev.mouhieddine.springmvcrestexample.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +14,8 @@ import javax.persistence.Id;
  * @since : 1/16/2021, Saturday
  **/
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Customer {
   @Id

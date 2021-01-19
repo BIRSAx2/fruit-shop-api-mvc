@@ -1,7 +1,9 @@
 package dev.mouhieddine.springmvcrestexample.api.v1.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author : Mouhieddine.dev
@@ -9,6 +11,8 @@ import lombok.Data;
  **/
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class VendorDTO {
   private Long id;
   private String name;
