@@ -4,6 +4,9 @@ import dev.mouhieddine.springmvcrestexample.api.v1.model.VendorDTO;
 import dev.mouhieddine.springmvcrestexample.api.v1.model.VendorListDTO;
 import dev.mouhieddine.springmvcrestexample.domain.Vendor;
 import dev.mouhieddine.springmvcrestexample.services.VendorService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.SwaggerDefinition;
+import io.swagger.annotations.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
  * @author : Mouhieddine.dev
  * @since : 1/17/2021, Sunday
  **/
+@Api(tags = {"Vendors"})
+@SwaggerDefinition(tags = {
+        @Tag(name = "Vendors", description = "Vendors")
+})
 @RestController
 @RequestMapping(VendorController.BASE_URL)
 @Slf4j
