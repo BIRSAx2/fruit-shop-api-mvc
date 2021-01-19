@@ -3,7 +3,7 @@ Simple API built with Spring Boot MVC to mimic [Fruit Shop API](https://api.pred
 
 ### Try it 
 
-You can try the api by going to: [Fruit Shop API](https://fruit-shop-api.herokuapp.com/swagger-ui)
+You can try the api by going to: [Fruit Shop API](https://fruit-shop-api.herokuapp.com/swagger-ui/)
 
 ### Run locally
 You can start the application locally by using the following command:
