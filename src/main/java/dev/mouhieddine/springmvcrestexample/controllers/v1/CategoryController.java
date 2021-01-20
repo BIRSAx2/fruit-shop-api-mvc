@@ -4,6 +4,7 @@ import dev.mouhieddine.springmvcrestexample.api.v1.model.CategoryDTO;
 import dev.mouhieddine.springmvcrestexample.api.v1.model.CategoryListDTO;
 import dev.mouhieddine.springmvcrestexample.services.CategoryService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,15 @@ public class CategoryController {
     this.categoryService = categoryService;
   }
 
-  @GetMapping({"", "/"})
+  @ApiOperation("Lists all the product categories.")
+  @GetMapping({""})
   @ResponseStatus(HttpStatus.OK)
   public CategoryListDTO getAllCategories() {
     return new CategoryListDTO(categoryService.getAllCategories());
   }
 
-  @GetMapping({"/{name}", "{name}"})
+  @ApiOperation("Get a category by name.")
+  @GetMapping({"/{name}"})
   public CategoryDTO getCategoryByName(@PathVariable String name) {
     return categoryService.getCategoryByName(name);
   }

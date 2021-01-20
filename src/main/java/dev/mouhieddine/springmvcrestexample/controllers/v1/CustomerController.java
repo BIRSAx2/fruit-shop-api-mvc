@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.*;
  * @since : 1/16/2021, Saturday
  **/
 @Api(tags = {"Customers"})
+@SwaggerDefinition(tags = {
+        @Tag(name = "Customers", description = "Customers")
+})
 @RestController
 @RequestMapping(CustomerController.BASE_URL)
 public class CustomerController {
@@ -28,40 +31,42 @@ public class CustomerController {
   }
 
   @ApiOperation(value = "Lists all the customers.")
-  @GetMapping({"", "/"})
+  @GetMapping()
   @ResponseStatus(HttpStatus.OK)
   public CustomerListDTO getAllCustomers() {
     return new CustomerListDTO(customerService.getAllCustomers());
   }
 
-  @ApiOperation(value = "Get a customer by id")
-  @GetMapping({"/{id}", "/{id}/"})
+  @ApiOperation(value = "Get a customer by id.")
+  @GetMapping({"/{id}"})
   @ResponseStatus(HttpStatus.OK)
   public CustomerDTO getCustomerById(@PathVariable Long id) {
     return customerService.getCustomerById(id);
   }
 
   @ApiOperation(value = "Replace a customer by new data.")
-  @PutMapping({"/{id}", "/{id}/"})
+  @PutMapping({"/{id}"})
   @ResponseStatus(HttpStatus.OK)
   public CustomerDTO updateCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
     return customerService.saveCustomerByDTO(id, customerDTO);
   }
+
   @ApiOperation(value = "Update a customer.")
-  @PatchMapping({"/{id}", "/{id}/"})
+  @PatchMapping({"/{id}"})
   @ResponseStatus(HttpStatus.OK)
   public CustomerDTO patchCustomer(@PathVariable Long id, @RequestBody CustomerDTO customerDTO) {
     return customerService.patchCustomer(id, customerDTO);
   }
 
   @ApiOperation(value = "Delete a customer.")
-  @DeleteMapping({"/{id}", "/{id}/"})
+  @DeleteMapping({"/{id}"})
   @ResponseStatus(HttpStatus.OK)
   public void deleteCustomer(@PathVariable Long id) {
     customerService.deleteCustomerById(id);
   }
 
-  @PostMapping({"", "/"})
+  @ApiOperation(value = "Create a customer.")
+  @PostMapping({""})
   @ResponseStatus(HttpStatus.CREATED)
   public CustomerDTO createCustomer(@RequestBody CustomerDTO customerDTO) {
     return customerService.createNewCustomer(customerDTO);

@@ -5,6 +5,7 @@ import dev.mouhieddine.springmvcrestexample.api.v1.model.VendorListDTO;
 import dev.mouhieddine.springmvcrestexample.domain.Vendor;
 import dev.mouhieddine.springmvcrestexample.services.VendorService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.SwaggerDefinition;
 import io.swagger.annotations.Tag;
 import lombok.extern.slf4j.Slf4j;
@@ -31,37 +32,43 @@ public class VendorController {
     this.vendorService = vendorService;
   }
 
-  @GetMapping({"", "/"})
+  @ApiOperation("Lists all the vendors.")
+  @GetMapping({""})
   @ResponseStatus(HttpStatus.OK)
   public VendorListDTO getAllVendors() {
     return new VendorListDTO(vendorService.getAllVendors());
   }
 
-  @GetMapping({"/{id}", "/{id}/"})
+  @ApiOperation("Get a vendor by id.")
+  @GetMapping({"/{id}"})
   @ResponseStatus(HttpStatus.OK)
   public VendorDTO getVendorById(@PathVariable Long id) {
     return vendorService.getVendorById(id);
   }
 
-  @PutMapping({"/{id}", "/{id}/"})
+  @ApiOperation("Update a vendor.")
+  @PutMapping({"/{id}"})
   @ResponseStatus(HttpStatus.OK)
   public VendorDTO updateVendor(@PathVariable Long id, @RequestBody VendorDTO vendorDTO) {
     return vendorService.saveVendorByDTO(id, vendorDTO);
   }
 
-  @PatchMapping({"/{id}", "/{id}/"})
+  @ApiOperation("Replace a vendor by new data.")
+  @PatchMapping({"/{id}"})
   @ResponseStatus(HttpStatus.OK)
   public VendorDTO patchVendor(@PathVariable Long id, @RequestBody VendorDTO vendorDTO) {
     return vendorService.patchVendor(id, vendorDTO);
   }
 
-  @DeleteMapping({"/{id}", "/{id}/"})
+  @ApiOperation("Delete a vendor.")
+  @DeleteMapping({"/{id}"})
   @ResponseStatus(HttpStatus.OK)
   public void deleteVendor(@PathVariable Long id) {
     vendorService.deleteVendorById(id);
   }
 
-  @PostMapping({"", "/"})
+  @ApiOperation("Create a vendor.")
+  @PostMapping({""})
   @ResponseStatus(HttpStatus.CREATED)
   public VendorDTO createVendor(@RequestBody VendorDTO vendorDTO) {
     return vendorService.createNewVendor(vendorDTO);
